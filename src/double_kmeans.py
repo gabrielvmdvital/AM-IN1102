@@ -12,8 +12,10 @@ class DoubleKMeans:
         best_W = np.inf
         best_model = None
 
+        rng = np.random.RandomState(self.random_state)
+
         for init_idx in range(n_init):
-            model = self._fit_single(X)
+            model = self._fit_single(X, rng)
             if model['W'][-1] < best_W:
                 best_W = model['W'][-1]
                 best_model = model
@@ -25,8 +27,8 @@ class DoubleKMeans:
         self.best_W_ = best_W
         return self
 
-    def _fit_single(self, X):
-        rng = np.random.RandomState(self.random_state)
+    def _fit_single(self, X, rng):
+
         N, P = X.shape
         K, H = self.K, self.H
 
